@@ -23,7 +23,7 @@ CREATE TABLE Matricula (
     IdAluno INT NOT NULL,
     IdCurso INT NOT NULL,
     DataMatricula DATE NOT NULL,
-    Status int DEFAULT 0,
+    Status VARCHAR(50) DEFAULT 'Pendente',
 
     FOREIGN KEY (IdAluno) REFERENCES Aluno(IdAluno),
     FOREIGN KEY (IdCurso) REFERENCES Curso(IdCurso)
