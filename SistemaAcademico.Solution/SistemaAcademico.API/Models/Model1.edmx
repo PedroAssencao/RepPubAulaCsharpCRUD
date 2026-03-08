@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DbSistemaAcademicoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aluno">
+          <Key>
+            <PropertyRef Name="IdAluno" />
+          </Key>
+          <Property Name="IdAluno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="DataNascimento" Type="date" />
+        </EntityType>
+        <EntityType Name="Boleto">
+          <Key>
+            <PropertyRef Name="IdBoleto" />
+          </Key>
+          <Property Name="IdBoleto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMatricula" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DataVencimento" Type="date" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="IdCurso" />
+          </Key>
+          <Property Name="IdCurso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DuracaoSemestres" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matricula">
+          <Key>
+            <PropertyRef Name="IdMatricula" />
+          </Key>
+          <Property Name="IdMatricula" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAluno" Type="int" Nullable="false" />
+          <Property Name="IdCurso" Type="int" Nullable="false" />
+          <Property Name="DataMatricula" Type="date" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Boleto__IdMatric__412EB0B6">
+          <End Role="Matricula" Type="Self.Matricula" Multiplicity="1" />
+          <End Role="Boleto" Type="Self.Boleto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matricula">
+              <PropertyRef Name="IdMatricula" />
+            </Principal>
+            <Dependent Role="Boleto">
+              <PropertyRef Name="IdMatricula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matricula__IdAlu__3C69FB99">
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+          <End Role="Matricula" Type="Self.Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aluno">
+              <PropertyRef Name="IdAluno" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="IdAluno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matricula__IdCur__3D5E1FD2">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Matricula" Type="Self.Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="IdCurso" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="IdCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbSistemaAcademicoModelStoreContainer">
+          <EntitySet Name="Aluno" EntityType="Self.Aluno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Boleto" EntityType="Self.Boleto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matricula" EntityType="Self.Matricula" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Boleto__IdMatric__412EB0B6" Association="Self.FK__Boleto__IdMatric__412EB0B6">
+            <End Role="Matricula" EntitySet="Matricula" />
+            <End Role="Boleto" EntitySet="Boleto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matricula__IdAlu__3C69FB99" Association="Self.FK__Matricula__IdAlu__3C69FB99">
+            <End Role="Aluno" EntitySet="Aluno" />
+            <End Role="Matricula" EntitySet="Matricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matricula__IdCur__3D5E1FD2" Association="Self.FK__Matricula__IdCur__3D5E1FD2">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Matricula" EntitySet="Matricula" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbSistemaAcademicoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aluno">
+          <Key>
+            <PropertyRef Name="IdAluno" />
+          </Key>
+          <Property Name="IdAluno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DataNascimento" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Matricula" Relationship="Self.FK__Matricula__IdAlu__3C69FB99" FromRole="Aluno" ToRole="Matricula" />
+        </EntityType>
+        <EntityType Name="Boleto">
+          <Key>
+            <PropertyRef Name="IdBoleto" />
+          </Key>
+          <Property Name="IdBoleto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMatricula" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DataVencimento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Matricula" Relationship="Self.FK__Boleto__IdMatric__412EB0B6" FromRole="Boleto" ToRole="Matricula" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="IdCurso" />
+          </Key>
+          <Property Name="IdCurso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DuracaoSemestres" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Matricula" Relationship="Self.FK__Matricula__IdCur__3D5E1FD2" FromRole="Curso" ToRole="Matricula" />
+        </EntityType>
+        <EntityType Name="Matricula">
+          <Key>
+            <PropertyRef Name="IdMatricula" />
+          </Key>
+          <Property Name="IdMatricula" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAluno" Type="Int32" Nullable="false" />
+          <Property Name="IdCurso" Type="Int32" Nullable="false" />
+          <Property Name="DataMatricula" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Aluno" Relationship="Self.FK__Matricula__IdAlu__3C69FB99" FromRole="Matricula" ToRole="Aluno" />
+          <NavigationProperty Name="Boleto" Relationship="Self.FK__Boleto__IdMatric__412EB0B6" FromRole="Matricula" ToRole="Boleto" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK__Matricula__IdCur__3D5E1FD2" FromRole="Matricula" ToRole="Curso" />
+        </EntityType>
+        <Association Name="FK__Matricula__IdAlu__3C69FB99">
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+          <End Role="Matricula" Type="Self.Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aluno">
+              <PropertyRef Name="IdAluno" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="IdAluno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Boleto__IdMatric__412EB0B6">
+          <End Role="Matricula" Type="Self.Matricula" Multiplicity="1" />
+          <End Role="Boleto" Type="Self.Boleto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matricula">
+              <PropertyRef Name="IdMatricula" />
+            </Principal>
+            <Dependent Role="Boleto">
+              <PropertyRef Name="IdMatricula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matricula__IdCur__3D5E1FD2">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Matricula" Type="Self.Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="IdCurso" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="IdCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbSistemaAcademicoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aluno" EntityType="Self.Aluno" />
+          <EntitySet Name="Boleto" EntityType="Self.Boleto" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" />
+          <EntitySet Name="Matricula" EntityType="Self.Matricula" />
+          <AssociationSet Name="FK__Matricula__IdAlu__3C69FB99" Association="Self.FK__Matricula__IdAlu__3C69FB99">
+            <End Role="Aluno" EntitySet="Aluno" />
+            <End Role="Matricula" EntitySet="Matricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Boleto__IdMatric__412EB0B6" Association="Self.FK__Boleto__IdMatric__412EB0B6">
+            <End Role="Matricula" EntitySet="Matricula" />
+            <End Role="Boleto" EntitySet="Boleto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matricula__IdCur__3D5E1FD2" Association="Self.FK__Matricula__IdCur__3D5E1FD2">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Matricula" EntitySet="Matricula" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbSistemaAcademicoModelStoreContainer" CdmEntityContainer="DbSistemaAcademicoEntities">
+          <EntitySetMapping Name="Aluno">
+            <EntityTypeMapping TypeName="DbSistemaAcademicoModel.Aluno">
+              <MappingFragment StoreEntitySet="Aluno">
+                <ScalarProperty Name="IdAluno" ColumnName="IdAluno" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Boleto">
+            <EntityTypeMapping TypeName="DbSistemaAcademicoModel.Boleto">
+              <MappingFragment StoreEntitySet="Boleto">
+                <ScalarProperty Name="IdBoleto" ColumnName="IdBoleto" />
+                <ScalarProperty Name="IdMatricula" ColumnName="IdMatricula" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="DataVencimento" ColumnName="DataVencimento" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curso">
+            <EntityTypeMapping TypeName="DbSistemaAcademicoModel.Curso">
+              <MappingFragment StoreEntitySet="Curso">
+                <ScalarProperty Name="IdCurso" ColumnName="IdCurso" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="DuracaoSemestres" ColumnName="DuracaoSemestres" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matricula">
+            <EntityTypeMapping TypeName="DbSistemaAcademicoModel.Matricula">
+              <MappingFragment StoreEntitySet="Matricula">
+                <ScalarProperty Name="IdMatricula" ColumnName="IdMatricula" />
+                <ScalarProperty Name="IdAluno" ColumnName="IdAluno" />
+                <ScalarProperty Name="IdCurso" ColumnName="IdCurso" />
+                <ScalarProperty Name="DataMatricula" ColumnName="DataMatricula" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
