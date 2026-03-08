@@ -61,29 +61,3 @@ INSERT INTO Boleto (IdMatricula, Valor, DataVencimento)
 VALUES
 (1, 850.00, DATEADD(DAY, 30, GETDATE())),
 (2, 750.00, DATEADD(DAY, 30, GETDATE()));
-
-
-
-CREATE TABLE Curso (
-    IdCurso INT IDENTITY(1,1) PRIMARY KEY,
-    Nome VARCHAR(100) NOT NULL,
-    DuracaoSemestres INT NOT NULL
-);
-
-CREATE TABLE Aluno (
-    IdAluno INT IDENTITY(1,1) PRIMARY KEY,
-    Nome VARCHAR(150) NOT NULL,
-    Email VARCHAR(150),
-    DataNascimento DATE
-);
-
-CREATE TABLE Matricula (
-    IdMatricula INT IDENTITY(1,1) PRIMARY KEY,
-    IdAluno INT NOT NULL,
-    IdCurso INT NOT NULL,
-    DataMatricula DATE NOT NULL,
-    Status int DEFAULT 0,
-
-    FOREIGN KEY (IdAluno) REFERENCES Aluno(IdAluno),
-    FOREIGN KEY (IdCurso) REFERENCES Curso(IdCurso)
-);
